@@ -38,9 +38,9 @@ class UserGetSerializer(UserSerializer):
         return (
             request.user.is_authenticated
             and Subscription.objects.filter(
-                    user=request.user,
-                    author=obj
-                ).exists()
+                user=request.user,
+                author=obj
+            ).exists()
         )
 
 
