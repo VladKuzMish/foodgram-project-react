@@ -9,9 +9,11 @@ MODELS_FIELDS = {}
 
 
 class Command(BaseCommand):
+
     help = 'Creating model objects according the file path specified'
 
     def add_arguments(self, parser):
+
         parser.add_argument('--path', type=str, help="file path")
         parser.add_argument('--model_name', type=str, help="model name")
         parser.add_argument(
@@ -21,6 +23,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+
         file_path = options['path']
         model = apps.get_model(options['app_name'], options['model_name'])
         with open(file_path, 'rt', encoding='utf-8') as csv_file:

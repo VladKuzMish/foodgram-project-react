@@ -12,7 +12,9 @@ from users.models import User, Subscription
 
 class UserSignUpSerializer(UserCreateSerializer):
     """Сериализатор для регистрации пользователей."""
+
     class Meta:
+
         model = User
         fields = ('email', 'id', 'username', 'first_name',
                   'last_name', 'password')
@@ -20,42 +22,69 @@ class UserSignUpSerializer(UserCreateSerializer):
 
 class UserGetSerializer(UserSerializer):
     """Сериализатор для работы с информацией о пользователях."""
+
     is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
+
         model = User
         fields = ('email', 'id', 'username', 'first_name',
                   'last_name', 'is_subscribed')
 
     def get_is_subscribed(self, obj):
+
         request = self.context.get('request')
-        return (request.user.is_authenticated
-                and Subscription.objects.filter(
-                    user=request.user, author=obj
-                ).exists())
+
+        return (
+            request.user.is_authenticated
+            and Subscription.objects.filter(
+                    user=request.user,
+                    author=obj
+                ).exists()
+        )
 
 
 class RecipeSmallSerializer(serializers.ModelSerializer):
     """Сериализатор для работы с краткой информацией о рецепте."""
+
     class Meta:
+
         model = Recipe
         fields = ('id', 'name', 'image', 'cooking_time')
 
 
 class UserSubscribeRepresentSerializer(UserGetSerializer):
-    """"Сериализатор для предоставления информации
+    """"
+    Сериализатор для предоставления информации
     о подписках пользователя.
     """
+
     is_subscribed = serializers.SerializerMethodField()
     recipes = serializers.SerializerMethodField()
     recipes_count = serializers.SerializerMethodField()
 
     class Meta:
+
         model = User
-        fields = ('email', 'id', 'username', 'first_name',
-                  'last_name', 'is_subscribed', 'recipes', 'recipes_count')
-        read_only_fields = ('email', 'username', 'first_name', 'last_name',
-                            'is_subscribed', 'recipes', 'recipes_count')
+        fields = (
+            'email',
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'is_subscribed',
+            'recipes',
+            'recipes_count'
+        )
+        read_only_fields = (
+            'email',
+            'username',
+            'first_name',
+            'last_name',
+            'is_subscribed',
+            'recipes',
+            'recipes_count'
+        )
 
     def get_recipes(self, obj):
         request = self.context.get('request')
