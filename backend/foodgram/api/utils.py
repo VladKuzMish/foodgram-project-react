@@ -1,6 +1,5 @@
 import base64
 
-from django.shortcuts import get_object_or_404
 from django.core.files.base import ContentFile
 from rest_framework import serializers, status
 from rest_framework.response import Response
@@ -46,7 +45,6 @@ def create_ingredients(ingredients, recipe):
             )
         )
     RecipeIngredient.objects.bulk_create(ingredient_list)
-
 
 
 def create_model_instance(request, instance, serializer_name):

@@ -15,9 +15,9 @@ from api.serializers import (FavoriteSerializer, IngredientSerializer,
                              TagSerialiser,
                              UserSubscribeRepresentSerializer,
                              UserSubscribeSerializer)
-from api.utils import create_model_instance, delete_model_instance
-from recipes.models import (Favorite, Ingredient, Recipe,
-                            RecipeIngredient, ShoppingCart, Tag)
+from api.utils import create_model_instance
+from recipes.models import (Ingredient, Recipe,
+                            RecipeIngredient, Tag)
 from users.models import Subscription, User
 
 
@@ -128,7 +128,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if request.method == 'POST':
             return create_model_instance(request, recipe, FavoriteSerializer)
 
-
     @action(
         detail=True,
         methods=['post', 'delete'],
@@ -148,7 +147,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 recipe,
                 ShoppingCartSerializer
             )
-
 
     @action(
         detail=False,
