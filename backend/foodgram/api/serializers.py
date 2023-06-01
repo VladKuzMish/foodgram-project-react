@@ -251,7 +251,7 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
         RecipeIngredient.objects.filter(recipe=instance).delete()
         super().update(instance, validated_data)
         create_ingredients(ingredients, instance)
-        instance.save()
+
         return instance
 
     def to_representation(self, instance):

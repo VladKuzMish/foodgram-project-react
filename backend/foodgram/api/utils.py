@@ -27,14 +27,17 @@ def create_ingredients(ingredients, recipe):
     Используется при создании/редактировании рецепта.
     """
 
+    ingredient_ids = [ingredient['id'] for ingredient in ingredients]
+    ingredient_mapping = {
+        ingredient.id: ingredient
+        for ingredient in Ingredient.objects.filter(id__in=ingredient_ids)
+    }
+
     ingredient_list = []
 
     for ingredient in ingredients:
-        current_ingredient = get_object_or_404(
-            Ingredient,
-            id=ingredient.get('id')
-        )
-        amount = ingredient.get('amount')
+        current_ingredient = ingredient_mapping.get(ingredient['id'])
+        amount = ingredient['amount']
         ingredient_list.append(
             RecipeIngredient(
                 recipe=recipe,
@@ -43,6 +46,7 @@ def create_ingredients(ingredients, recipe):
             )
         )
     RecipeIngredient.objects.bulk_create(ingredient_list)
+
 
 
 def create_model_instance(request, instance, serializer_name):
