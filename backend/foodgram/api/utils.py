@@ -27,10 +27,10 @@ def create_ingredients(ingredients, recipe):
     """
 
     ingredient_ids = [ingredient['id'] for ingredient in ingredients]
-    ingredient_mapping = {
-        ingredient.id: ingredient
-        for ingredient in Ingredient.objects.filter(id__in=ingredient_ids)
-    }
+    ingredient_mapping = {}
+
+    for ingredient in Ingredient.objects.filter(id__in=ingredient_ids):
+        ingredient_mapping[ingredient.id] = ingredient
 
     ingredient_list = []
 
@@ -44,6 +44,7 @@ def create_ingredients(ingredients, recipe):
                 amount=amount
             )
         )
+
     RecipeIngredient.objects.bulk_create(ingredient_list)
 
 
