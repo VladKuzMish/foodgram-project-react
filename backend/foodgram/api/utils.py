@@ -4,7 +4,7 @@ from django.core.files.base import ContentFile
 from rest_framework import serializers, status
 from rest_framework.response import Response
 
-from recipes.models import Ingredient, RecipeIngredient
+from backend.foodgram.recipes.models import RecipeIngredient
 
 
 class Base64ImageField(serializers.ImageField):
@@ -26,21 +26,15 @@ def create_ingredients(ingredients, recipe):
     Используется при создании/редактировании рецепта.
     """
 
-    ingredient_ids = [ingredient['id'] for ingredient in ingredients]
-    ingredient_mapping = {}
-
-    for ingredient in Ingredient.objects.filter(id__in=ingredient_ids):
-        ingredient_mapping[ingredient.id] = ingredient
-
     ingredient_list = []
 
     for ingredient in ingredients:
-        current_ingredient = ingredient_mapping.get(ingredient['id'])
+        ingredient_id = ingredient['id']
         amount = ingredient['amount']
         ingredient_list.append(
             RecipeIngredient(
                 recipe=recipe,
-                ingredient=current_ingredient,
+                ingredient_id=ingredient_id,
                 amount=amount
             )
         )
