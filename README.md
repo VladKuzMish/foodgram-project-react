@@ -1,6 +1,6 @@
 # Проект Foodgram
 
-![Github actions](https://github.com/VladKuzMish/foodgram-project-react/actions/workflows/yamdb_workflow.yml/badge.svg)
+![Github actions](https://github.com/VladKuzMish/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 
 
 ### Описание
